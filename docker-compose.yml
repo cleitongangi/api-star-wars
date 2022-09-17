@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  starwars.restapi:
+    image: ${DOCKER_REGISTRY-}starwarsrestapi
+    build:
+      context: .
+      dockerfile: src/StarWars.RestAPI/Dockerfile
+  sqldb:
+    container_name: "sqldb"  
+    image: "mcr.microsoft.com/mssql/server:2019-latest"    
+    environment:
+      SA_PASSWORD: "st@arW@rsAp1"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1458:1433"
