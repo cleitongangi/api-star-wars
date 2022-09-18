@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using StarWars.Domain.Entities;
-using System.Reflection.Emit;
 
 namespace StarWars.Infra.Data.EntityConfig
 {
@@ -20,8 +19,6 @@ namespace StarWars.Infra.Data.EntityConfig
             builder.Property(x => x.Modified).HasColumnName(@"Modified").HasColumnType("datetime").IsRequired();
             builder.Property(x => x.Active).HasColumnName(@"Active").HasColumnType("bit").IsRequired();
             builder.Property(x => x.Deleted).HasColumnName(@"Deleted").HasColumnType("datetime").IsRequired(false);
-
-            builder.HasMany(p => p.Film).WithMany(p => p.Planet).UsingEntity(j => j.ToTable("FilmPlanet"));
         }
     }
 }

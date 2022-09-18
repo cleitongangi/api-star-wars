@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using StarWars.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using StarWars.Infra.Data.Repositories;
+using StarWars.Domain.Interfaces.Data;
 
 namespace StarWars.Infra.Data
 {
@@ -14,7 +15,7 @@ namespace StarWars.Infra.Data
         public static void Register(IServiceCollection services, string posterrDbConnectionString)
         {
             #region Register DBContext            
-            //services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<StarWarsDbContext, StarWarsDbContext>();
 
             services.AddDbContext<StarWarsDbContext>(options =>
@@ -28,7 +29,7 @@ namespace StarWars.Infra.Data
 
 
             #region Register all repositories
-            var repositoriesAssembly = typeof(PlanetRepository).Assembly;
+            var repositoriesAssembly = typeof(StarWarsRepository).Assembly;
             var repositoriesRegistrations =
                 from type in repositoriesAssembly.GetExportedTypes()
                 where type.Namespace == "StarWars.Infra.Data.Repositories"

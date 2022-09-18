@@ -1,3 +1,4 @@
+using StarWars.Infra.Data;
 using StarWars.Infra.IoC.RestAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,7 @@ IoCWrapper.Register(builder.Services, builder.Configuration);
 var app = builder.Build();
 
 // Apply EF Migrations
-MigrationManager.ApplyMigration(app.Services);
+await MigrationManager.ApplyMigrationAsync(app.Services, builder.Configuration);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

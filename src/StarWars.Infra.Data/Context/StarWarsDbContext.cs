@@ -6,8 +6,9 @@ namespace StarWars.Infra.Data.Context
 {
     public class StarWarsDbContext : DbContext
     {
-        public DbSet<FilmEntity> Film { get; set; } = null!; // Film
-        public DbSet<PlanetEntity> Planet { get; set; } = null!; // Planet
+        public DbSet<FilmEntity> Film => Set<FilmEntity>(); // Film
+        public DbSet<FilmPlanetEntity> FilmPlanet => Set<FilmPlanetEntity>(); // FilmPlanet
+        public DbSet<PlanetEntity> Planet => Set<PlanetEntity>(); // Planet        
 
         public StarWarsDbContext(DbContextOptions<StarWarsDbContext> dbContextOptions)
             : base(dbContextOptions)
@@ -19,6 +20,7 @@ namespace StarWars.Infra.Data.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new FilmConfiguration());
+            modelBuilder.ApplyConfiguration(new FilmPlanetConfiguration());
             modelBuilder.ApplyConfiguration(new PlanetConfiguration());
         }
     }

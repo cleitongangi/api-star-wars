@@ -2,25 +2,37 @@
 {
     public class PlanetEntity
     {
-        public int PlanetId { get; set; } // Id (Primary key)
-        public string Name { get; set; } = null!; // Name (length: 50)
-        public string Climate { get; set; } = null!; // Climate (length: 50)
-        public string Terrain { get; set; } = null!; // Terrain (length: 50)
-        public DateTime Created { get; set; } // Created
-        public DateTime Modified { get; set; } // Modified
-        public bool Active { get; set; } // Active
-        public DateTime? Deleted { get; set; } // Deleted
+        public int PlanetId { get; private set; } // PlanetId (Primary key)
+        public string Name { get; private set; } = null!; // Name (length: 50)
+        public string Climate { get; private set; } = null!; // Climate (length: 50)
+        public string Terrain { get; private set; } = null!; // Terrain (length: 50)
+        public DateTime Created { get; private set; } // Created
+        public DateTime Modified { get; private set; } // Modified
+        public bool Active { get; private set; } // Active
+        public DateTime? Deleted { get; private set; } // Deleted
 
-        // Reverse navigation
-
-        /// <summary>
-        /// Child Film (Many-to-Many) mapped by table [FilmPlanet]
-        /// </summary>
-        public virtual ICollection<FilmEntity> Film { get; set; } // Many to many mapping
+        // Reverse navigation        
+        public virtual ICollection<FilmPlanetEntity> FilmPlanet { get; set; }
 
         public PlanetEntity()
+        {            
+            FilmPlanet = new List<FilmPlanetEntity>();
+        }
+
+        public static class Factory
         {
-            Film = new List<FilmEntity>();
+            public static PlanetEntity CreateForAdd(string name, string climate, string terrain)
+            {
+                return new PlanetEntity()
+                {
+                    Name = name,
+                    Climate = climate,
+                    Terrain = terrain,
+                    Created = DateTime.Now,
+                    Modified = DateTime.Now,
+                    Active = true
+                };
+            }
         }
     }
 }
