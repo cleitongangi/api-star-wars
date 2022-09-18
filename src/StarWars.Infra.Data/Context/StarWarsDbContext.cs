@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StarWars.Domain.Entities;
 using StarWars.Infra.Data.EntityConfig;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StarWars.Infra.Data.Context
 {
@@ -14,6 +9,10 @@ namespace StarWars.Infra.Data.Context
         public DbSet<FilmEntity> Film { get; set; } = null!; // Film
         public DbSet<PlanetEntity> Planet { get; set; } = null!; // Planet
 
+        public StarWarsDbContext(DbContextOptions<StarWarsDbContext> dbContextOptions)
+            : base(dbContextOptions)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

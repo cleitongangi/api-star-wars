@@ -1,3 +1,5 @@
+using StarWars.Infra.IoC.RestAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +9,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// IoC registers
+IoCWrapper.Register(builder.Services, builder.Configuration);
+
 var app = builder.Build();
+
+// Apply EF Migrations
+MigrationManager.ApplyMigration(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

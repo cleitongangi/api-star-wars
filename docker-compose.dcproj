@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>2b995508-e1ce-4f36-93ea-14e1f3566c57</ProjectGuid>
+    <ProjectGuid>61d38dbe-ba18-4086-856a-bc114dcc6929</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>starwars.restapi</DockerServiceName>
