@@ -2,14 +2,14 @@
 {
     public class FilmEntity
     {
-        public int FilmId { get; private set; } // FilmId (Primary key)
-        public string Name { get; private set; } = null!; // Name (length: 50)
-        public string Director { get; private set; } = null!; // Director (length: 50)
-        public DateTime ReleaseDate { get; private set; } // ReleaseDate
-        public DateTime Created { get; private set; } // Created
-        public DateTime Modified { get; private set; } // Modified
-        public bool Active { get; private set; } // Active
-        public DateTime? Deleted { get; private set; } // Deleted
+        public int FilmId { get; set; } // FilmId (Primary key)
+        public string Name { get; set; } = null!; // Name (length: 50)
+        public string Director { get; set; } = null!; // Director (length: 50)
+        public DateTime ReleaseDate { get; set; } // ReleaseDate
+        public DateTime Created { get; set; } // Created
+        public DateTime Modified { get; set; } // Modified
+        public bool Active { get; set; } // Active
+        public DateTime? Deleted { get; set; } // Deleted
 
         // Reverse navigation                
         public virtual ICollection<FilmPlanetEntity> FilmPlanet { get; set; }
@@ -21,6 +21,13 @@
 
         public static class Factory
         {
+            /// <summary>
+            /// Create a new instance to insert entity in database
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="director"></param>
+            /// <param name="releaseDate"></param>
+            /// <returns></returns>
             public static FilmEntity CreateForAdd(string name, string director, DateTime releaseDate)
             {
                 return new FilmEntity()
@@ -31,6 +38,21 @@
                     Created = DateTime.Now,
                     Modified = DateTime.Now,
                     Active = true
+                };
+            }
+
+            /// <summary>
+            /// Fill only necessary fields necessary to api. Is not necessary return all fields from database
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public static FilmEntity CreateForApiGet(FilmEntity entity)
+            {
+                return new FilmEntity()
+                {
+                    Name = entity.Name,
+                    Director = entity.Director,
+                    ReleaseDate = entity.ReleaseDate
                 };
             }
         }

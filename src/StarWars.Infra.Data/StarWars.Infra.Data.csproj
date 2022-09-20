@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StarWars.Domain.Core\StarWars.Domain.Core.csproj" />
     <ProjectReference Include="..\StarWars.Domain\StarWars.Domain.csproj" />
   </ItemGroup>
 

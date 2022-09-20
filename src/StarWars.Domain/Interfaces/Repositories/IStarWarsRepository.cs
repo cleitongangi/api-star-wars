@@ -1,4 +1,5 @@
-﻿using StarWars.Domain.Entities;
+﻿using StarWars.Domain.Core.Pagination;
+using StarWars.Domain.Entities;
 
 namespace StarWars.Domain.Interfaces.Repositories
 {
@@ -7,6 +8,6 @@ namespace StarWars.Domain.Interfaces.Repositories
         Task AddFilmAsync(FilmEntity entity);
         Task AddFilmPlanetAsync(FilmPlanetEntity entity);
         Task AddPlanetAsync(PlanetEntity entity);
-        Task<IEnumerable<PlanetEntity>> GetPlanetsAsync();
+        Task<PagedResult<PlanetEntity>> GetPlanetsAsync(int page = 1);
     }
 }
