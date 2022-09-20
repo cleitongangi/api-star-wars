@@ -27,4 +27,8 @@
     <ProjectReference Include="..\StarWars.Infra.IoC.RestAPI\StarWars.Infra.IoC.RestAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="StarWars.RestAPI.IntegrationTests" />
+  </ItemGroup>
+
 </Project>

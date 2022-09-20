@@ -7,7 +7,7 @@ using StarWars.RestAPI.ApiResponses;
 namespace StarWars.RestAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Produces("application/json")]
     public class PlanetsController : ControllerBase
     {
