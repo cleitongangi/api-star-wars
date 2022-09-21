@@ -33,7 +33,7 @@ namespace StarWars.Infra.Data.Repositories
             await _db.FilmPlanet.AddAsync(entity);
         }
 
-        public async Task<PagedResult<PlanetEntity>> GetPlanetsAsync(int page = 1)
+        public async Task<PagedResult<PlanetEntity>> ListPlanetsAsync(int page = 1)
         {
             var query = _db.Planet
                 .Select(x => new PlanetEntity()
@@ -53,7 +53,7 @@ namespace StarWars.Infra.Data.Repositories
                         }
                     }).ToList()
                 });
-                        
+
             var pageSize = _configSettings.DefaultPaginationSize;
             var skip = (page - 1) * pageSize;
             var data = await query
@@ -61,6 +61,30 @@ namespace StarWars.Infra.Data.Repositories
                 .Take(pageSize)
                 .ToListAsync();
             return new PagedResult<PlanetEntity>(data, page, pageSize);
+        }
+
+        public async Task<PlanetEntity?> GetPlanetAsync(int planetId)
+        {
+            return await _db.Planet
+                .Where(x => x.PlanetId == planetId)
+                .Select(x => new PlanetEntity()
+                {
+                    PlanetId = x.PlanetId,
+                    Name = x.Name,
+                    Climate = x.Climate,
+                    Terrain = x.Terrain,
+                    FilmPlanet = x.FilmPlanet.Select(fp => new FilmPlanetEntity()
+                    {
+                        Film = new FilmEntity()
+                        {
+                            FilmId = fp.Film.FilmId,
+                            Name = fp.Film.Name,
+                            Director = fp.Film.Director,
+                            ReleaseDate = fp.Film.ReleaseDate
+                        }
+                    }).ToList()
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

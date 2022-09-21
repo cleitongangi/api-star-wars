@@ -24,11 +24,24 @@ namespace StarWars.RestAPI.Controllers
 
         [HttpGet()]
         [ProducesResponseType(typeof(PagedResult<Planet>), 200)]
-        public async Task<IActionResult> Get(int page = 1)
+        public async Task<IActionResult> ListPlanets(int page = 1)
         {
-            var result = await _planetRepository.GetPlanetsAsync(page);
+            var result = await _planetRepository.ListPlanetsAsync(page);
             
             return Ok(_mapper.Map<PagedResult<Planet>>(result));
+        }
+
+        [HttpGet("{planetId}")]
+        [ProducesResponseType(typeof(Planet), 200)]
+        public async Task<IActionResult> GetPlanet(int planetId)
+        {
+            var result = await _planetRepository.GetPlanetAsync(planetId);
+            if(result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<Planet>(result));
         }
     }
 }

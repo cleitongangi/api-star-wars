@@ -8,6 +8,7 @@ namespace StarWars.Domain.Interfaces.Repositories
         Task AddFilmAsync(FilmEntity entity);
         Task AddFilmPlanetAsync(FilmPlanetEntity entity);
         Task AddPlanetAsync(PlanetEntity entity);
-        Task<PagedResult<PlanetEntity>> GetPlanetsAsync(int page = 1);
+        Task<PlanetEntity?> GetPlanetAsync(int planetId);
+        Task<PagedResult<PlanetEntity>> ListPlanetsAsync(int page = 1);
     }
 }
