@@ -79,5 +79,41 @@ namespace StarWars.RestAPI.Tests
             Assert.NotNull(okResult);
             Assert.Equal(200, okResult.StatusCode);
         }
+
+        [Fact]
+        public async Task DisablePlanet_NonexistentPlanet_ReturnNotFound()
+        {
+            // Arrange            
+            _repositoryMock.Setup(repo => repo.DisablePlanetAsync(It.IsAny<int>()))
+                .ReturnsAsync(0);
+
+            var controller = new PlanetsController(_loggerMock.Object, _mapperMock.Object, _repositoryMock.Object);
+
+            // Act
+            var result = await controller.DisablePlanet(1);
+            var notFound = result as NotFoundResult;
+
+            // Assert
+            Assert.NotNull(notFound);
+            Assert.Equal(404, notFound.StatusCode);
+        }
+
+        [Fact]
+        public async Task DisablePlanet_ExistingPlanet_ReturnNoContent()
+        {
+            // Arrange            
+            _repositoryMock.Setup(repo => repo.DisablePlanetAsync(It.IsAny<int>()))
+                .ReturnsAsync(1);
+
+            var controller = new PlanetsController(_loggerMock.Object, _mapperMock.Object, _repositoryMock.Object);
+
+            // Act
+            var result = await controller.DisablePlanet(1);
+            var noContent = result as NoContentResult;
+
+            // Assert
+            Assert.NotNull(noContent);
+            Assert.Equal(204, noContent.StatusCode);
+        }
     }
 }

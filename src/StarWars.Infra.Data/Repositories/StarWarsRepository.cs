@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using StarWars.Domain.Core.Pagination;
 using StarWars.Domain.Entities;
 using StarWars.Domain.Interfaces.GlobalSettings;
@@ -85,6 +86,19 @@ namespace StarWars.Infra.Data.Repositories
                     }).ToList()
                 })
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<int> DisablePlanetAsync(int planetId)
+        {
+            // [Active] = 1 to ensure that won't disable twice even with concurrency
+            var query = @"update [Planet]
+                set [Active] = 0
+                    ,[Modified] = GETDATE()
+                    ,[Deleted] = GETDATE()
+                where [PlanetId] = @planetId
+                    and [Active] = 1";
+
+            return await _db.Database.ExecuteSqlRawAsync(query, new SqlParameter("@planetId", planetId));
         }
     }
 }
