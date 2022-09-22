@@ -64,7 +64,7 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
             var client = application.CreateClient();
 
             // Act
-            var result = await client.GetFromJsonAsync<PagedResult<Planet>>("/api/Planets?search=ar");
+            var result = await client.GetFromJsonAsync<PagedResult<Planet>>("/api/Planets?search=an");
 
             // Assert
             Assert.NotNull(result);
@@ -106,11 +106,11 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         public async Task DisablePlanet_ActivePlanet_ReturnNoContent()
         {
             // Arrange
-            await using var application = new RestApiApplicationFactory();            
+            await using var application = new RestApiApplicationFactory();
             var client = application.CreateClient();
 
             // Act
-            var result = await client.DeleteAsync("/api/Planets/10");
+            var result = await client.DeleteAsync("/api/Planets/2");
 
             // Assert
             Assert.NotNull(result);
@@ -137,15 +137,14 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         {
             // Arrange
             await using var application = new RestApiApplicationFactory();
-            await new DbRepository(application).RecreateDbAsync();
             var client = application.CreateClient();
 
-            var firstDelete = await client.DeleteAsync("/api/Planets/5");
+            var firstDelete = await client.DeleteAsync("/api/Planets/1");
             Assert.NotNull(firstDelete);
             Assert.Equal(HttpStatusCode.NoContent, firstDelete.StatusCode);
 
             // Act
-            var secondDelete = await client.DeleteAsync("/api/Planets/5");
+            var secondDelete = await client.DeleteAsync("/api/Planets/1");
 
             // Assert
             Assert.NotNull(secondDelete);

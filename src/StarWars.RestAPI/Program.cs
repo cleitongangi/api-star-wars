@@ -18,7 +18,7 @@ DependencyInjectorStartup.Register(builder.Services, builder.Configuration);
 var app = builder.Build();
 
 // Apply EF Migrations
-await MigrationManager.ApplyMigrationAsync(app.Services, builder.Configuration);
+await MigrationManager.ApplyMigrationAsync(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
