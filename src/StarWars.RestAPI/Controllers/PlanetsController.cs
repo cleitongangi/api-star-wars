@@ -24,9 +24,9 @@ namespace StarWars.RestAPI.Controllers
 
         [HttpGet()]
         [ProducesResponseType(typeof(PagedResult<Planet>), 200)]
-        public async Task<IActionResult> ListPlanets(int page = 1)
+        public async Task<IActionResult> ListPlanets(string? search = null, int page = 1)
         {
-            var result = await _planetRepository.ListPlanetsAsync(page);
+            var result = await _planetRepository.ListPlanetsAsync(search, page);
 
             return Ok(_mapper.Map<PagedResult<Planet>>(result));
         }

@@ -1,19 +1,15 @@
 ﻿using StarWars.Domain.Core.Pagination;
 using StarWars.RestAPI.ApiResponses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using StarWars.RestAPI.IntegrationTests.Utilities;
 using System.Net;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StarWars.RestAPI.IntegrationTests.Controllers
 {
     public class PlanetsControllerTests
     {
         [Fact]
-        public async Task GetPlanets_DefaultPage_ReturnOk()
+        public async Task ListPlanets_DefaultPage_ReturnOk()
         {
             // Arrange
             await using var application = new RestApiApplicationFactory();
@@ -29,7 +25,7 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task GetPlanets_NonexistentPage_ReturnOk()
+        public async Task ListPlanets_NonexistentPage_ReturnOk()
         {
             // Arrange
             await using var application = new RestApiApplicationFactory();
@@ -45,7 +41,7 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task GetPlanets_Page2_ReturnOk()
+        public async Task ListPlanets_Page2_ReturnOk()
         {
             // Arrange
             await using var application = new RestApiApplicationFactory();
@@ -61,14 +57,14 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         }
 
         [Fact]
-        public async Task GetPlanets_WithData_ReturnOk()
+        public async Task ListPlanets_WithSearch_ReturnOk()
         {
             // Arrange
             await using var application = new RestApiApplicationFactory();
             var client = application.CreateClient();
 
             // Act
-            var result = await client.GetFromJsonAsync<PagedResult<Planet>>("/api/Planets");
+            var result = await client.GetFromJsonAsync<PagedResult<Planet>>("/api/Planets?search=ar");
 
             // Assert
             Assert.NotNull(result);
@@ -110,7 +106,7 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         public async Task DisablePlanet_ActivePlanet_ReturnNoContent()
         {
             // Arrange
-            await using var application = new RestApiApplicationFactory();
+            await using var application = new RestApiApplicationFactory();            
             var client = application.CreateClient();
 
             // Act
@@ -141,6 +137,7 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
         {
             // Arrange
             await using var application = new RestApiApplicationFactory();
+            await new DbRepository(application).RecreateDbAsync();
             var client = application.CreateClient();
 
             var firstDelete = await client.DeleteAsync("/api/Planets/5");

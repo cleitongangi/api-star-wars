@@ -10,6 +10,6 @@ namespace StarWars.Domain.Interfaces.Repositories
         Task AddPlanetAsync(PlanetEntity entity);
         Task<int> DisablePlanetAsync(int planetId);
         Task<PlanetEntity?> GetPlanetAsync(int planetId);
-        Task<PagedResult<PlanetEntity>> ListPlanetsAsync(int page = 1);
+        Task<PagedResult<PlanetEntity>> ListPlanetsAsync(string? search = null, int page = 1);
     }
 }

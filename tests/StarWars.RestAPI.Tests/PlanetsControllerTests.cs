@@ -21,7 +21,7 @@ namespace StarWars.RestAPI.Tests
         public async Task ListPlanets_WithData_ReturnOk()
         {
             // Arrange            
-            _repositoryMock.Setup(repo => repo.ListPlanetsAsync(It.IsAny<int>()))
+            _repositoryMock.Setup(repo => repo.ListPlanetsAsync(null, It.IsAny<int>()))
                 .ReturnsAsync(new PagedResult<PlanetEntity>(new List<PlanetEntity>(), 1, 10));
 
             _mapperMock.Setup(map => map.Map<PagedResult<Planet>>(It.IsAny<PagedResult<PlanetEntity>>()))
@@ -30,7 +30,28 @@ namespace StarWars.RestAPI.Tests
             var controller = new PlanetsController(_loggerMock.Object, _mapperMock.Object, _repositoryMock.Object);
 
             // Act
-            var result = await controller.ListPlanets(1);
+            var result = await controller.ListPlanets(null, 1);
+            var okResult = result as OkObjectResult;
+
+            // Assert
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task ListPlanets_WithSearch_ReturnOk()
+        {
+            // Arrange            
+            _repositoryMock.Setup(repo => repo.ListPlanetsAsync(It.IsAny<string>(), It.IsAny<int>()))
+                .ReturnsAsync(new PagedResult<PlanetEntity>(new List<PlanetEntity>(), 1, 10));
+
+            _mapperMock.Setup(map => map.Map<PagedResult<Planet>>(It.IsAny<PagedResult<PlanetEntity>>()))
+                .Returns(new PagedResult<Planet>(new List<Planet>(), 1, 10));
+
+            var controller = new PlanetsController(_loggerMock.Object, _mapperMock.Object, _repositoryMock.Object);
+
+            // Act
+            var result = await controller.ListPlanets("test", 1);
             var okResult = result as OkObjectResult;
 
             // Assert

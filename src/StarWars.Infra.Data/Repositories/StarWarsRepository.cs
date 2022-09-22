@@ -34,7 +34,7 @@ namespace StarWars.Infra.Data.Repositories
             await _db.FilmPlanet.AddAsync(entity);
         }
 
-        public async Task<PagedResult<PlanetEntity>> ListPlanetsAsync(int page = 1)
+        public async Task<PagedResult<PlanetEntity>> ListPlanetsAsync(string? search = null, int page = 1)
         {
             var query = _db.Planet
                 .Select(x => new PlanetEntity()
@@ -54,6 +54,11 @@ namespace StarWars.Infra.Data.Repositories
                         }
                     }).ToList()
                 });
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x => x.Name.Contains(search));
+            }
 
             var pageSize = _configSettings.DefaultPaginationSize;
             var skip = (page - 1) * pageSize;
