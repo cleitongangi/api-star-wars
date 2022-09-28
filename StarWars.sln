@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infra", "3 - Infra", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1 - Data", "3.1 - Data", "{F14890C5-1199-4F65-88E9-3DED7538C0B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2 - CrossCutting", "3.2 - CrossCutting", "{E657BACF-1A94-48BE-8BC3-AA878DEEF627}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.3 - CrossCutting", "3.3 - CrossCutting", "{E657BACF-1A94-48BE-8BC3-AA878DEEF627}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.Domain", "src\StarWars.Domain\StarWars.Domain.csproj", "{682E1144-B837-4E17-8034-5861ECAC942E}"
 EndProject
@@ -27,9 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Docker", "4 - Docker", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.Domain.Core", "src\StarWars.Domain.Core\StarWars.Domain.Core.csproj", "{C35AB2B6-E1FB-4718-888A-FC92B1B259FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.RestAPI.Tests", "tests\StarWars.RestAPI.Tests\StarWars.RestAPI.Tests.csproj", "{97CFD1C5-ABEB-4D60-AB94-0967D2727E0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.RestAPI.Tests", "tests\StarWars.RestAPI.Tests\StarWars.RestAPI.Tests.csproj", "{97CFD1C5-ABEB-4D60-AB94-0967D2727E0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.RestAPI.IntegrationTests", "tests\StarWars.RestAPI.IntegrationTests\StarWars.RestAPI.IntegrationTests.csproj", "{94D98A5A-C02C-45D2-BFD4-626B1EDA3F4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.RestAPI.IntegrationTests", "tests\StarWars.RestAPI.IntegrationTests\StarWars.RestAPI.IntegrationTests.csproj", "{94D98A5A-C02C-45D2-BFD4-626B1EDA3F4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarWars.Infra.HttpApi.Client", "src\StarWars.Infra.HttpApi.Client\StarWars.Infra.HttpApi.Client.csproj", "{04AD4779-433F-4A0C-92CD-DF8A34B68CE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Domain.Tests", "tests\StarWars.Domain.Tests\StarWars.Domain.Tests.csproj", "{E199B125-0BB1-4E8E-8D19-938EA75EBAD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{94D98A5A-C02C-45D2-BFD4-626B1EDA3F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94D98A5A-C02C-45D2-BFD4-626B1EDA3F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D98A5A-C02C-45D2-BFD4-626B1EDA3F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04AD4779-433F-4A0C-92CD-DF8A34B68CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04AD4779-433F-4A0C-92CD-DF8A34B68CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04AD4779-433F-4A0C-92CD-DF8A34B68CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04AD4779-433F-4A0C-92CD-DF8A34B68CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E199B125-0BB1-4E8E-8D19-938EA75EBAD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E199B125-0BB1-4E8E-8D19-938EA75EBAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E199B125-0BB1-4E8E-8D19-938EA75EBAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E199B125-0BB1-4E8E-8D19-938EA75EBAD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +96,8 @@ Global
 		{C35AB2B6-E1FB-4718-888A-FC92B1B259FE} = {50CEFD4D-4206-4B10-8D39-18FFA4E9A03B}
 		{97CFD1C5-ABEB-4D60-AB94-0967D2727E0E} = {407F12FC-211C-4C6E-9D67-E4237533FE60}
 		{94D98A5A-C02C-45D2-BFD4-626B1EDA3F4A} = {407F12FC-211C-4C6E-9D67-E4237533FE60}
+		{04AD4779-433F-4A0C-92CD-DF8A34B68CE6} = {F14890C5-1199-4F65-88E9-3DED7538C0B0}
+		{E199B125-0BB1-4E8E-8D19-938EA75EBAD5} = {50CEFD4D-4206-4B10-8D39-18FFA4E9A03B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5853C6EE-F46F-4C0B-8684-C0FDD34B50B8}

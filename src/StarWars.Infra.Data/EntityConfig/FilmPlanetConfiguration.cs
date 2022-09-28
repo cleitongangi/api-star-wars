@@ -14,6 +14,7 @@ namespace StarWars.Infra.Data.EntityConfig
             builder.Property(x => x.FilmId).HasColumnName(@"FilmId").HasColumnType("int").IsRequired();
             builder.Property(x => x.PlanetId).HasColumnName(@"PlanetId").HasColumnType("int").IsRequired();
 
+            
             builder.HasOne(p => p.Film).WithMany(p => p.FilmPlanet).HasForeignKey(x => x.FilmId);
             builder.HasOne(p => p.Planet).WithMany(p => p.FilmPlanet).HasForeignKey(x => x.PlanetId);
         }

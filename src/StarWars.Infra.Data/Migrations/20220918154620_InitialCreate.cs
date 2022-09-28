@@ -13,8 +13,7 @@ namespace StarWars.Infra.Data.Migrations
                 name: "Film",
                 columns: table => new
                 {
-                    FilmId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FilmId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Director = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -32,8 +31,7 @@ namespace StarWars.Infra.Data.Migrations
                 name: "Planet",
                 columns: table => new
                 {
-                    PlanetId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlanetId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Climate = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Terrain = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),

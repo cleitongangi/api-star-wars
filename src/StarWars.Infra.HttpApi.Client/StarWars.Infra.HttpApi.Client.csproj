@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\StarWars.Domain\StarWars.Domain.csproj" />
-    <ProjectReference Include="..\StarWars.Infra.Data\StarWars.Infra.Data.csproj" />
-    <ProjectReference Include="..\StarWars.Infra.HttpApi.Client\StarWars.Infra.HttpApi.Client.csproj" />
   </ItemGroup>
 
 </Project>

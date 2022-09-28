@@ -11,7 +11,7 @@ namespace StarWars.Infra.Data.EntityConfig
             builder.ToTable("Planet");
             builder.HasKey(x => x.PlanetId);
 
-            builder.Property(x => x.PlanetId).HasColumnName(@"PlanetId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
+            builder.Property(x => x.PlanetId).HasColumnName(@"PlanetId").HasColumnType("int").IsRequired();
             builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("varchar(50)").IsRequired().IsUnicode(false).HasMaxLength(50);
             builder.Property(x => x.Climate).HasColumnName(@"Climate").HasColumnType("varchar(50)").IsRequired().IsUnicode(false).HasMaxLength(50);
             builder.Property(x => x.Terrain).HasColumnName(@"Terrain").HasColumnType("varchar(50)").IsRequired().IsUnicode(false).HasMaxLength(50);

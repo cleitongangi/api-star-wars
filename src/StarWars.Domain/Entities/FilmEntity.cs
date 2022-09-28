@@ -28,10 +28,11 @@
             /// <param name="director"></param>
             /// <param name="releaseDate"></param>
             /// <returns></returns>
-            public static FilmEntity CreateForAdd(string name, string director, DateTime releaseDate)
+            public static FilmEntity CreateForAdd(int filmId, string name, string director, DateTime releaseDate)
             {
                 return new FilmEntity()
                 {
+                    FilmId = filmId,
                     Name = name,
                     Director = director,
                     ReleaseDate = releaseDate,

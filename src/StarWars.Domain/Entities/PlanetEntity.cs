@@ -16,7 +16,7 @@
 
         public PlanetEntity()
         {
-            FilmPlanet = new List<FilmPlanetEntity>();            
+            FilmPlanet = new List<FilmPlanetEntity>();
         }
 
         public static class Factory
@@ -28,16 +28,18 @@
             /// <param name="climate"></param>
             /// <param name="terrain"></param>
             /// <returns></returns>
-            public static PlanetEntity CreateForAdd(string name, string climate, string terrain)
+            public static PlanetEntity CreateForAdd(int planetId, string name, string climate, string terrain, ICollection<FilmPlanetEntity> filmPlanet)
             {
                 return new PlanetEntity()
                 {
+                    PlanetId = planetId,
                     Name = name,
                     Climate = climate,
                     Terrain = terrain,
+                    Active = true,
                     Created = DateTime.Now,
                     Modified = DateTime.Now,
-                    Active = true
+                    FilmPlanet = filmPlanet
                 };
             }
         }

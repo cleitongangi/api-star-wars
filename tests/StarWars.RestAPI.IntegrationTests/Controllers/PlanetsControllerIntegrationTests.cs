@@ -1,12 +1,11 @@
 ﻿using StarWars.Domain.Core.Pagination;
 using StarWars.RestAPI.ApiResponses;
-using StarWars.RestAPI.IntegrationTests.Utilities;
 using System.Net;
 using System.Net.Http.Json;
 
 namespace StarWars.RestAPI.IntegrationTests.Controllers
 {
-    public class PlanetsControllerTests
+    public class PlanetsControllerIntegrationTests
     {
         [Fact]
         public async Task ListPlanets_DefaultPage_ReturnOk()
@@ -149,6 +148,78 @@ namespace StarWars.RestAPI.IntegrationTests.Controllers
             // Assert
             Assert.NotNull(secondDelete);
             Assert.Equal(HttpStatusCode.NotFound, secondDelete.StatusCode);
+        }
+
+        [Fact]
+        public async Task ImportPlanet_Inexistent_ReturnNotFound()
+        {
+            // Arrange
+            await using var application = new RestApiApplicationFactory();
+            var client = application.CreateClient();
+
+            // Act
+            var result = await client.PostAsync("/api/Planets/9999", null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+        }
+
+        [Fact]
+        public async Task ImportPlanet_ExistentPlanet_ReturnCreated()
+        {
+            // Arrange
+            await using var application = new RestApiApplicationFactory();
+            var client = application.CreateClient();
+
+            // Act
+            var result = await client.PostAsync("/api/Planets/3", null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(HttpStatusCode.Created, result.StatusCode);
+        }
+
+        [Fact]
+        public async Task ImportPlanet_Twice_ReturnConflict()
+        {
+            // Arrange
+            await using var application = new RestApiApplicationFactory();
+            var client = application.CreateClient();
+
+            var firstPost = await client.PostAsync("/api/Planets/4", null);
+            Assert.NotNull(firstPost);
+            Assert.Equal(HttpStatusCode.Created, firstPost.StatusCode);
+
+            // Act
+            var secondPost = await client.PostAsync("/api/Planets/4", null);
+
+            // Assert
+            Assert.NotNull(secondPost);
+            Assert.Equal(HttpStatusCode.Conflict, secondPost.StatusCode);
+        }
+
+        [Fact]
+        public async Task ImportPlanet_DisabledPlanet_ReturnReactivated()
+        {
+            // Arrange
+            await using var application = new RestApiApplicationFactory();
+            var client = application.CreateClient();
+
+            var createPlanet = await client.PostAsync("/api/Planets/4", null);
+            Assert.NotNull(createPlanet);
+            Assert.Equal(HttpStatusCode.Created, createPlanet.StatusCode);
+
+            var deletePlanet = await client.DeleteAsync("/api/Planets/4");
+            Assert.NotNull(deletePlanet);
+            Assert.Equal(HttpStatusCode.NoContent, deletePlanet.StatusCode);
+
+            // Act
+            var secondPost = await client.PostAsync("/api/Planets/4", null);
+
+            // Assert
+            Assert.NotNull(secondPost);
+            Assert.Equal(HttpStatusCode.Created, secondPost.StatusCode);
         }
     }
 }

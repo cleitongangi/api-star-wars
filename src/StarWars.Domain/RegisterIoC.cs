@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using StarWars.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +12,17 @@ namespace StarWars.Domain
     {
         public static void Register(IServiceCollection services)
         {
-            //#region Registra todos os Validations
-            //services.AddScoped<IUserAddValidation, UserAddValidation>();
-            //services.AddScoped<ITeamUpdateValidation, TeamUpdateValidation>();
-            //services.AddScoped<IPlayerUpdateValidation, PlayerUpdateValidation>();
-            //services.AddScoped<ITransferListAddValidation, TransferListAddValidation>();
-            //services.AddScoped<ITransferListCancelValidation, TransferListCancelValidation>();
-            //services.AddScoped<ITransferListBuyValidation, TransferListBuyValidation>();
-            //#endregion Registra todos os Validations
+            #region Register all Services
+            var servicesAssembly = typeof(IStarWarsService).Assembly;
+            var serviceRegistrations =
+                from type in servicesAssembly.GetExportedTypes()
+                where type.Namespace == "StarWars.Domain.Services"
+                where type.GetInterfaces().Any()
+                select new { Interface = type.GetInterfaces().Single(), Implementation = type };
 
-            //#region Registra todos os Serviços
-            //var servicesAssembly = typeof(IUserAddValidation).Assembly;
-            //var serviceRegistrations =
-            //    from type in servicesAssembly.GetExportedTypes()
-            //    where type.Namespace == "SoccerManager.Domain.Services"
-            //    where type.GetInterfaces().Any()
-            //    select new { Interface = type.GetInterfaces().Single(), Implementation = type };
-
-            //foreach (var reg in serviceRegistrations)
-            //    services.AddScoped(reg.Interface, reg.Implementation);
-            //#endregion
+            foreach (var reg in serviceRegistrations)
+                services.AddScoped(reg.Interface, reg.Implementation);
+            #endregion
         }
     }
 }

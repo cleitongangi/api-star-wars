@@ -13,7 +13,8 @@ namespace StarWars.Infra.IoC.RestAPI
         public static void Register(IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("StarWarsDb");
-            Data.RegisterIoC.Register(services, connectionString);            
+            Data.RegisterIoC.Register(services, connectionString);
+            HttpApi.Client.RegisterIoC.Register(services);
             Domain.RegisterIoC.Register(services);
         }
     }

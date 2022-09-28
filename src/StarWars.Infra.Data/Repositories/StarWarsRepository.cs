@@ -19,9 +19,32 @@ namespace StarWars.Infra.Data.Repositories
             this._configSettings = configSettings;
         }
 
+        public async Task<bool?> GetPlanetStatusAsync(int planetId)
+        {
+            var planet = await _db.Planet.FirstOrDefaultAsync(x => x.PlanetId == planetId);
+            if (planet != null)
+            {
+                return planet.Active;
+            }
+            return null;
+        }
+
         public async Task AddPlanetAsync(PlanetEntity entity)
         {
             await _db.Planet.AddAsync(entity);
+        }
+
+        public void ReactivePlanet(PlanetEntity entity)
+        {
+            _db.Attach(entity);
+            _db.Entry(entity).Property(r => r.Modified).IsModified = true;
+            _db.Entry(entity).Property(r => r.Deleted).IsModified = true;
+            _db.Entry(entity).Property(r => r.Active).IsModified = true;
+        }
+
+        public async Task<bool> HasFilmAsync(int filmId)
+        {
+            return await _db.Film.AnyAsync(x => x.FilmId == filmId);
         }
 
         public async Task AddFilmAsync(FilmEntity entity)

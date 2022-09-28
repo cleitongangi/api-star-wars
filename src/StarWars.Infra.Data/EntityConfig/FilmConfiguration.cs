@@ -11,7 +11,7 @@ namespace StarWars.Infra.Data.EntityConfig
             builder.ToTable("Film");
             builder.HasKey(x => x.FilmId);
 
-            builder.Property(x => x.FilmId).HasColumnName(@"FilmId").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
+            builder.Property(x => x.FilmId).HasColumnName(@"FilmId").HasColumnType("int").IsRequired();
             builder.Property(x => x.Name).HasColumnName(@"Name").HasColumnType("varchar(50)").IsRequired().IsUnicode(false).HasMaxLength(50);
             builder.Property(x => x.Director).HasColumnName(@"Director").HasColumnType("varchar(50)").IsRequired().IsUnicode(false).HasMaxLength(50);
             builder.Property(x => x.ReleaseDate).HasColumnName(@"ReleaseDate").HasColumnType("datetime").IsRequired();

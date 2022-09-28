@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using StarWars.Infra.Data;
 using StarWars.RestAPI;
 using StarWars.RestAPI.AutoMapper;
@@ -11,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapperSetup();
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
 
 // IoC registers
 DependencyInjectorStartup.Register(builder.Services, builder.Configuration);
