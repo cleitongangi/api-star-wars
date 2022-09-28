@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using StarWars.Domain.Entities;
+﻿using StarWars.Domain.Entities;
 
 namespace StarWars.Domain.Interfaces.Services
 {
