@@ -48,26 +48,30 @@ namespace StarWars.RestAPI.Controllers
             var planetFromApi = await _apiStarWarsRepository.GetPlanetToAddAsync(planetId);
             if (planetFromApi == null)
             {
+                _logger.LogInformation("PlanetId '{id}' not found to import.", planetId);
                 return NotFound();
             }
 
             var planetStatus = await _starWarsRepository.GetPlanetStatusAsync(planetId);
             if (planetStatus == null)
-            { 
+            {
                 // Insert planet
-                await _starWarsService.AddPlanetAndFilmsAsync(planetFromApi);                
+                await _starWarsService.AddPlanetAndFilmsAsync(planetFromApi);
+                _logger.LogInformation("PlanetId '{id}' imported.", planetId);
             }
             else if (planetStatus.Value)
-            { 
+            {
                 // Planet already was imported
                 ModelState.AddModelError("planetId", "PlanetId informed already exists.");
+                _logger.LogInformation("PlanetId '{id}' informed already exists.", planetId);
                 return Conflict(ModelState);
             }
             else
-            { 
+            {
                 // Reactive planet.
                 _starWarsRepository.ReactivePlanet(planetFromApi);
-                await _uow.SaveChangesAsync();                
+                await _uow.SaveChangesAsync();
+                _logger.LogInformation("PlanetId '{id}' reactivated.", planetId);
             }
 
             return new CreatedAtRouteResult(nameof(GetPlanet), new { planetId }, null);
@@ -90,6 +94,7 @@ namespace StarWars.RestAPI.Controllers
             var result = await _starWarsRepository.GetPlanetAsync(planetId);
             if (result == null)
             {
+                _logger.LogInformation("PlanetId '{id}' not found.", planetId);
                 return NotFound();
             }
 
@@ -104,9 +109,11 @@ namespace StarWars.RestAPI.Controllers
             var affectedRows = await _starWarsRepository.DisablePlanetAsync(planetId);
             if (affectedRows == 0)
             {
+                _logger.LogInformation("PlanetId '{id}' not found to disable.", planetId);
                 return NotFound();
             }
 
+            _logger.LogInformation("PlanetId '{id}' disabled.", planetId);
             return NoContent();
         }
     }
