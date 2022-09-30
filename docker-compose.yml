@@ -6,6 +6,9 @@ services:
     build:
       context: .
       dockerfile: src/StarWars.RestAPI/Dockerfile
+    ports:
+      - "59381:443"
+      - "59382:80"
   sqldb:
     container_name: "sqldb"  
     image: "mcr.microsoft.com/mssql/server:2019-latest"    
