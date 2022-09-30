@@ -41,21 +41,6 @@
                     Active = true
                 };
             }
-
-            /// <summary>
-            /// Fill only necessary fields necessary to api. Is not necessary return all fields from database
-            /// </summary>
-            /// <param name="entity"></param>
-            /// <returns></returns>
-            public static FilmEntity CreateForApiGet(FilmEntity entity)
-            {
-                return new FilmEntity()
-                {
-                    Name = entity.Name,
-                    Director = entity.Director,
-                    ReleaseDate = entity.ReleaseDate
-                };
-            }
         }
     }
 }
