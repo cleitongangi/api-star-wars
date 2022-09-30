@@ -1,5 +1,9 @@
 # API Star Wars
 
+Essa aplicação serve como uma aplicação de exemplo de RestAPI em .Net 6 que usa os dados de planetas e filmes da API pública do Star Wars (https://swapi.dev/).  
+Na API pública do Star Wars existem informações mais completas sobre a franquia Star Wars, esse projeto não tem como objetivo ser um projeto substituto, é apenas para própositos de estudos.
+
+
 ## Instruções para executar o projeto
 ### Softwares necessários
 - Visual Studio 2022 ou Vs Code
