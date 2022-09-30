@@ -4,6 +4,7 @@ using NLog.Web;
 using StarWars.Infra.Data;
 using StarWars.RestAPI;
 using StarWars.RestAPI.AutoMapper;
+using StarWars.RestAPI.Middleware;
 using System.Reflection;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -57,6 +58,8 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    app.UseMiddleware<ExceptionMiddleware>();
 
     app.UseHttpsRedirection();
 
