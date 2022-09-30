@@ -39,6 +39,21 @@ namespace StarWars.RestAPI.Controllers
             this._uow = unitOfWork;
         }
 
+        /// <summary>
+        /// Import a planet from public Star Wars API https://swapi.dev/
+        /// </summary>
+        /// <param name="planetId"></param>
+        /// <returns>A newly imported planet</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /api/Planets/1
+        ///
+        ///  Is not necessary post any json content, only planetId in URL
+        /// </remarks>
+        /// <response code="201">Returns the newly imported planet</response>
+        /// <response code="404">If not found the planet in https://swapi.dev/ API to import</response>
+        /// <response code="409">If planet was already imported</response>
         [HttpPost("{planetId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -77,6 +92,19 @@ namespace StarWars.RestAPI.Controllers
             return new CreatedAtRouteResult(nameof(GetPlanet), new { planetId }, null);
         }
 
+        /// <summary>
+        /// List planets and search planets by name
+        /// </summary>
+        /// <param name="search"></param>
+        /// <param name="page"></param>
+        /// <returns>A paginated list of planets</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /api/Planets?search=a&amp;page=2
+        ///
+        /// </remarks>
+        /// <response code="200">Returns a list of planets with pagination</response>
         [HttpGet()]
         [ProducesResponseType(typeof(PagedResult<Planet>), 200)]
         public async Task<IActionResult> ListPlanets(string? search = null, int page = 1)
@@ -86,6 +114,19 @@ namespace StarWars.RestAPI.Controllers
             return Ok(_mapper.Map<PagedResult<Planet>>(result));
         }
 
+        /// <summary>
+        /// Get a planet by id
+        /// </summary>
+        /// <param name="planetId"></param>
+        /// <returns>A planet with related films</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /api/Planets/1
+        ///
+        /// </remarks>
+        /// <response code="200">Returns a planet with related films</response>
+        /// <response code="404">If the planet doesn't exist</response>
         [HttpGet("{planetId}", Name = nameof(GetPlanet))]
         [ProducesResponseType(typeof(Planet), 200)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -101,6 +142,19 @@ namespace StarWars.RestAPI.Controllers
             return Ok(_mapper.Map<Planet>(result));
         }
 
+        /// <summary>
+        /// Delete a planet by id
+        /// </summary>
+        /// <param name="planetId"></param>
+        /// <returns>No content</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     DELETE /api/Planets/1
+        ///
+        /// </remarks>
+        /// <response code="404">If the planet doesn't exist</response>
+        /// <response code="204">Returns no content</response>
         [HttpDelete("{planetId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

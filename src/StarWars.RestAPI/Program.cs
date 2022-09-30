@@ -4,6 +4,7 @@ using NLog.Web;
 using StarWars.Infra.Data;
 using StarWars.RestAPI;
 using StarWars.RestAPI.AutoMapper;
+using System.Reflection;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -17,7 +18,23 @@ try
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Version = "v1",
+            Title = "Star Wars API",
+            Description = "API to get informations about planets and films related.",
+            Contact = new Microsoft.OpenApi.Models.OpenApiContact
+            {
+                Email = "cleiton.gangi@gmail.com",
+                Name = "Cleiton Gangi"
+            }
+        });
+
+        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    });
     builder.Services.AddAutoMapperSetup();
     builder.Services.AddFluentValidationAutoValidation()
         .AddFluentValidationClientsideAdapters();
